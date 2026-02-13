@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
       lokijs: false,
       "@react-native-async-storage/async-storage": false,
     };
-    config.externals.push("pino-pretty", "lokijs", "encoding");
+    config.externals.push("pino-pretty", "lokijs", "encoding", "@react-native-async-storage/async-storage");
     return config;
   },
 };
