@@ -4,6 +4,17 @@ const nextConfig: NextConfig = {
   images: {
     domains: [],
   },
+  webpack: (config) => {
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      "pino-pretty": false,
+      encoding: false,
+      lokijs: false,
+      "@react-native-async-storage/async-storage": false,
+    };
+    config.externals.push("pino-pretty", "lokijs", "encoding");
+    return config;
+  },
 };
 
 export default nextConfig;
