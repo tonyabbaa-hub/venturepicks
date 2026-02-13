@@ -41,6 +41,22 @@ export default function MarketPage({
   const [orderType, setOrderType] = useState<"market" | "limit">("market");
   const [timeRange, setTimeRange] = useState<TimeRange>("30D");
 
+  const chartData = useMemo(() => {
+    if (!market) return [];
+    switch (timeRange) {
+      case "1D":
+        return market.priceHistory.slice(-1);
+      case "7D":
+        return market.priceHistory.slice(-7);
+      case "30D":
+        return market.priceHistory;
+      case "ALL":
+        return market.priceHistory;
+      default:
+        return market.priceHistory;
+    }
+  }, [market, timeRange]);
+
   if (!market) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20 text-center">
@@ -59,21 +75,6 @@ export default function MarketPage({
   const shares = amountNum > 0 ? amountNum / price : 0;
   const potentialReturn = shares * 1 - amountNum;
   const roi = amountNum > 0 ? (potentialReturn / amountNum) * 100 : 0;
-
-  const chartData = useMemo(() => {
-    switch (timeRange) {
-      case "1D":
-        return market.priceHistory.slice(-1);
-      case "7D":
-        return market.priceHistory.slice(-7);
-      case "30D":
-        return market.priceHistory;
-      case "ALL":
-        return market.priceHistory;
-      default:
-        return market.priceHistory;
-    }
-  }, [market.priceHistory, timeRange]);
 
   return (
     <div className="min-h-screen bg-hero-glow">
